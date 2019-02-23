@@ -152,6 +152,9 @@
     case 'h':
       property.distanceType = NGT::Index::Property::DistanceType::DistanceTypeHamming;
       break;
+    case 'j':
+      property.distanceType = NGT::Index::Property::DistanceType::DistanceTypeJaccard;
+      break;
     case 'c':
       property.distanceType = NGT::Index::Property::DistanceType::DistanceTypeCosine;
       break;
