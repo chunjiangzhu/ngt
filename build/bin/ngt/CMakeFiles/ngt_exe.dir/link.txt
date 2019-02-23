@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/ngt_exe.dir/ngt.cpp.o  -o ngt  -L/home/cjz18001/DeployedProjects/tmp/pycharm_project_431/build/lib/NGT  -L/home/cjz18001/DeployedProjects/tmp/pycharm_project_431/lib/NGT ../../lib/NGT/libngt.so.1.6.2 -lpthread -lgomp -lrt 
