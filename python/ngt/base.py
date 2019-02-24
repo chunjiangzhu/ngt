@@ -230,7 +230,7 @@ class Index(object):
                 stat = Index.__ngt.ngt_set_property_object_type_float(
                                                                 prop, err)
                 Index._check_error_num(stat, err)
-            elif object_type == "Integer":
+            elif object_type == "Byte":
                 stat = Index.__ngt.ngt_set_property_object_type_integer(
                                                                 prop, err)
                 Index._check_error_num(stat, err)
