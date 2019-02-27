@@ -294,8 +294,8 @@ namespace NGT {
       while( uinta < (uint64_t*)last ){
 	count += _mm_popcnt_u64(*uinta ^ *uintb);
 	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
-	count += _mm_popcnt_u64(*uinta ^ *uintb);
-	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
+//	count += _mm_popcnt_u64(*uinta ^ *uintb);
+//	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
       }
 
       return (double)count/countDen;
