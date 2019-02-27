@@ -17,6 +17,7 @@
 #pragma once
 
 #include	"NGT/defines.h"
+#include "iostream"
 
 #if !defined(NGT_AVX_DISABLED) && defined(__AVX__)
 #include	<immintrin.h>
@@ -292,10 +293,11 @@ namespace NGT {
       size_t count = 0;
       size_t countDen = 0;
       while( uinta < (uint64_t*)last ){
+      cout << *uinta << ", " << *uintb << endl;
 	count += _mm_popcnt_u64(*uinta & *uintb);
 	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
-	count += _mm_popcnt_u64(*uinta & *uintb);
-	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
+//	count += _mm_popcnt_u64(*uinta & *uintb);
+//	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
       }
 
       return 1.0-(double)count/countDen;
