@@ -298,7 +298,7 @@ namespace NGT {
 	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
       }
 
-      return (double)count/countDen;
+      return 1-(double)count/countDen;
     }
 #endif
 
