@@ -258,7 +258,7 @@ namespace NGT {
       size_t count = 0;
       size_t countDen = 0;
       while( uinta < (OBJECT_TYPE*)last ){
-	count += popCount(*(uint32_t*)uinta ^ *(uint32_t*)uintb);
+	count += popCount(*(uint32_t*)uinta & *(uint32_t*)uintb);
 	countDen += popCount(*(uint32_t*)uinta | *(uint32_t*)uintb);
 	uinta += 4;
 	uintb += 4;
@@ -292,10 +292,10 @@ namespace NGT {
       size_t count = 0;
       size_t countDen = 0;
       while( uinta < (uint64_t*)last ){
-	count += _mm_popcnt_u64(*uinta ^ *uintb);
+	count += _mm_popcnt_u64(*uinta & *uintb);
 	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
-//	count += _mm_popcnt_u64(*uinta ^ *uintb);
-//	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
+	count += _mm_popcnt_u64(*uinta & *uintb);
+	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
       }
 
       return (double)count/countDen;
