@@ -299,9 +299,9 @@ namespace NGT {
 	countDe += _mm_popcnt_u64(*uinta++ | *uintb++);
       }
 
-      static int process = 0;
-      if((process++)%10 == 0)
-        cout << "count: " << count << ", countDe: " << countDe << ": jd: " << 1.0-(double)count/countDe;
+//      static int process = 0;
+//      if((process++)%10 == 0)
+//        cout << "count: " << count << ", countDe: " << countDe << ": jd: " << 1.0-(double)count/countDe;
       return 1.0-(double)count/countDe;
     }
 #endif
