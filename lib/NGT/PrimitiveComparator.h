@@ -292,8 +292,12 @@ namespace NGT {
       uint64_t *uintb = (uint64_t*)b;
       size_t count = 0;
       size_t countDen = 0;
-      while( uinta < (uint64_t*)last ){
+      cout << "size: " + size << endl;
       cout << *uinta << ", " << *uintb << endl;
+      uint8_t *uinta1 = (uint8_t*)a;
+      uint8_t *uintb1 = (uint8_t*)b;
+      cout << *uinta1 << ", " << *uintb1 << endl;
+      while( uinta < (uint64_t*)last ){
 	count += _mm_popcnt_u64(*uinta & *uintb);
 	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
 //	count += _mm_popcnt_u64(*uinta & *uintb);
