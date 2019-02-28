@@ -288,14 +288,6 @@ namespace NGT {
       inline static double compareJaccardDistance(const OBJECT_TYPE *a, const OBJECT_TYPE *b, size_t size) {
       const OBJECT_TYPE *last = a + size;
 
-//      const OBJECT_TYPE *uinta0 = a;
-//      const OBJECT_TYPE *uintb0 = b;
-//
-//      while( uinta0 < last ){
-//
-//      cout << *uinta0++ << ", " << *uintb0++ << endl;
-//      }
-
       uint64_t *uinta = (uint64_t*)a;
       uint64_t *uintb = (uint64_t*)b;
       size_t count = 0;
@@ -306,7 +298,10 @@ namespace NGT {
 	count += _mm_popcnt_u64(*uinta & *uintb);
 	countDe += _mm_popcnt_u64(*uinta++ | *uintb++);
       }
-        cout << "count: " << count << ", countDe: " << countDe << endl;
+
+      static int process = 0;
+      if((process++)%1000 == 0)
+        cout << "count: " << count << ", countDe: " << countDe << ": jd: " << 1.0-(double)count/countDe;
       return 1.0-(double)count/countDe;
     }
 #endif
