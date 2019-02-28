@@ -292,16 +292,16 @@ namespace NGT {
       uint64_t *uintb = (uint64_t*)b;
       size_t count = 0;
       size_t countDe = 0;
-      int i=0;
+//      int i=0;
       while( uinta < (uint64_t*)last ){
-      cout << i++ << ":";
+//      cout << i++ << ":";
 	count += _mm_popcnt_u64(*uinta & *uintb);
 	countDe += _mm_popcnt_u64(*uinta++ | *uintb++);
       }
 
 //      static int process = 0;
 //      if((process++)%10 == 0)
-        cout << "count: " << count << ", countDe: " << countDe << ": jd: " << 1.0-(double)count/countDe;
+//        cout << "count: " << count << ", countDe: " << countDe << ": jd: " << 1.0-(double)count/countDe;
       return 1.0-(double)count/countDe;
     }
 #endif
