@@ -257,15 +257,15 @@ namespace NGT {
       OBJECT_TYPE *uinta = (OBJECT_TYPE*)a;
       OBJECT_TYPE *uintb = (OBJECT_TYPE*)b;
       size_t count = 0;
-      size_t countDen = 0;
+      size_t countDe = 0;
       while( uinta < (OBJECT_TYPE*)last ){
 	count += popCount(*(uint32_t*)uinta & *(uint32_t*)uintb);
-	countDen += popCount(*(uint32_t*)uinta | *(uint32_t*)uintb);
+	countDe += popCount(*(uint32_t*)uinta | *(uint32_t*)uintb);
 	uinta += 4;
 	uintb += 4;
       }
 
-      return 1.0-(double)count/countDen;
+      return 1.0-(double)count/countDe;
     }
 #else
     template <typename OBJECT_TYPE>
@@ -299,15 +299,15 @@ namespace NGT {
       uint64_t *uinta = (uint64_t*)a;
       uint64_t *uintb = (uint64_t*)b;
       size_t count = 0;
-      size_t countDen = 0;
+      size_t countDe = 0;
       int i=0;
       while( uinta < (uint64_t*)last ){
       cout << i++ << ":";
 	count += _mm_popcnt_u64(*uinta & *uintb);
-	countDen += _mm_popcnt_u64(*uinta++ | *uintb++);
+	countDe += _mm_popcnt_u64(*uinta++ | *uintb++);
       }
-
-      return 1.0-(double)count/countDen;
+        cout << "count: " << count << ", countDe: " << countDe << endl;
+      return 1.0-(double)count/countDe;
     }
 #endif
 
