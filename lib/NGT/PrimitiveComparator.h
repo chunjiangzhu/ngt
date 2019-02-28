@@ -288,12 +288,12 @@ namespace NGT {
       inline static double compareJaccardDistance(const OBJECT_TYPE *a, const OBJECT_TYPE *b, size_t size) {
       const OBJECT_TYPE *last = a + size;
 
-      OBJECT_TYPE *uinta0 = a;
-      OBJECT_TYPE *uintb0 = b;
+      const OBJECT_TYPE *uinta0 = a;
+      const OBJECT_TYPE *uintb0 = b;
       int i=0;
-      while( uinta < (uint64_t*)last ){
+      while( uinta0 < last ){
       cout << i++ << ":";
-      cout << *uinta0 << ", " << *uintb0 << endl;
+      cout << *uinta0++ << ", " << *uintb0++ << endl;
       }
 
       uint64_t *uinta = (uint64_t*)a;
