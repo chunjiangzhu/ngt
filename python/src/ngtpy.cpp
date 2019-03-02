@@ -146,7 +146,8 @@ public:
     sc.setEpsilon(epsilon);			// set exploration coefficient.
     sc.setEdgeSize(edgeSize);			// if maxEdge is minus, the specified value in advance is used.
 
-    NGT::Index::search(sc);
+    NGT::Index::linearSearch(sc);
+//    NGT::Index::search(sc);
 
     numOfDistanceComputations += sc.distanceComputationCount;
 
