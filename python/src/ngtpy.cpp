@@ -148,8 +148,8 @@ public:
     NGT::ObjectDistances objects;
     sc.setResults(&objects);
 
-    NGT::Index::linearSearch(sc);
-//    NGT::Index::search(sc);
+//    NGT::Index::linearSearch(sc);
+    NGT::Index::search(sc);
 
     numOfDistanceComputations += sc.distanceComputationCount;
 
