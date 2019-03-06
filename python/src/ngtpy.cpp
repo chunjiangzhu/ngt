@@ -145,6 +145,8 @@ public:
     sc.setSize(size);				// the number of resultant objects.
     sc.setEpsilon(epsilon);			// set exploration coefficient.
     sc.setEdgeSize(edgeSize);			// if maxEdge is minus, the specified value in advance is used.
+    NGT::ObjectDistances objects;
+    sc.setResults(&objects);
 
     NGT::Index::linearSearch(sc);
 //    NGT::Index::search(sc);
@@ -153,21 +155,25 @@ public:
 
     NGT::Index::deleteObject(ngtquery);
     if (!withDistance) {
-      NGT::ResultPriorityQueue &r = sc.getWorkingResult();
-      py::array_t<int> ids(r.size());
+//      NGT::ResultPriorityQueue &r = sc.getWorkingResult();
+//      py::array_t<int> ids(r.size());
+      py::array_t<int> ids(objects.size());
       py::buffer_info idsinfo = ids.request();
-      int *endptr = reinterpret_cast<int*>(idsinfo.ptr); 
-      int *ptr = endptr + (r.size() - 1);
-      if (zeroNumbering) {
-        while (ptr >= endptr) {
-	  *ptr-- = r.top().id - 1;
-	  r.pop();
-        }
-      } else {
-        while (ptr >= endptr) {
-	  *ptr-- = r.top().id;
-	  r.pop();
-        }
+//      int *endptr = reinterpret_cast<int*>(idsinfo.ptr);
+//      int *ptr = endptr + (r.size() - 1);
+//      if (zeroNumbering) {
+//        while (ptr >= endptr) {
+//	  *ptr-- = r.top().id - 1;
+//	  r.pop();
+//        }
+//      } else {
+//        while (ptr >= endptr) {
+//	  *ptr-- = r.top().id;
+//	  r.pop();
+//        }
+      int *ptr = reinterpret_cast<int*>(idsinfo.ptr);
+      for (size_t oidx = 0; oidx < objects.size(); ++oidx) {
+        ptr[oidx] = objects[oidx].id - 1;
       }
 
       return ids;
