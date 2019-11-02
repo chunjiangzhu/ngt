@@ -34,6 +34,8 @@ public:
     }
     zeroNumbering = zeroBasedNumbering;
     numOfDistanceComputations = 0;
+    numOfSearchObjects = 10;
+    searchRadius = FLT_MAX;
   }
 
   static void create(
@@ -142,7 +144,12 @@ public:
       }
     }
     NGT::SearchContainer sc(*ngtquery);
-    sc.setSize(size);				// the number of resultant objects.
+    if (size == 0) {
+      sc.setSize(numOfSearchObjects);		// the number of resulting objects.
+    } else {
+      sc.setSize(size);				// the number of resulting objects.
+    }
+    sc.setRadius(searchRadius);
     sc.setEpsilon(epsilon);			// set exploration coefficient.
     sc.setEdgeSize(edgeSize);			// if maxEdge is minus, the specified value in advance is used.
     NGT::ObjectDistances objects;
@@ -226,10 +233,21 @@ public:
     return object;
   }
 
+  void set(size_t k, NGT::Distance r) {
+    if (k > 0) {
+      numOfSearchObjects = k;
+    }
+    if (r >= 0.0) {
+      searchRadius = r;
+    }
+  }
+
   size_t	getNumOfDistanceComputations() { return numOfDistanceComputations; }
 
   bool		zeroNumbering;	// for object ID numbering. zero-based or one-based numbering.
   size_t	numOfDistanceComputations;
+  size_t	numOfSearchObjects; // k
+  NGT::Distance	searchRadius; // range query
 };
 
 
@@ -270,6 +288,10 @@ PYBIND11_MODULE(ngtpy, m) {
            py::arg("debug") = false)
       .def("insert", &::Index::insert, 
            py::arg("object"),
-           py::arg("debug") = false);
+           py::arg("debug") = false)
+      .def("set", &::Index::set,
+           py::arg("num_of_search_objects") = 0,
+	   py::arg("search_radius") = -1.0);
 }
+
 
