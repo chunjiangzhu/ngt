@@ -155,6 +155,9 @@ public:
     NGT::ObjectDistances objects;
     sc.setResults(&objects);
 
+    cerr << "size: " << sc.size << endl;
+    cerr << "radius: " << sc.radius << endl;
+
 //    NGT::Index::linearSearch(sc);
     NGT::Index::search(sc);
 
