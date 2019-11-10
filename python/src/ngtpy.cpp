@@ -123,9 +123,89 @@ public:
     numOfDistanceComputations = 0;
   }
 
-  py::object search(
+//  py::object search(
+//   py::object query,
+//   size_t size = 10, 			// the number of resultant objects
+//   float epsilon = 0.1, 		// search parameter epsilon. the adequate range is from 0.0 to 0.15. minus value is acceptable.
+//   int edgeSize = -1,			// the number of used edges for each node during the exploration of the graph.
+//   bool withDistance = true
+//  ) {
+//    py::array_t<float> qobject(query);
+//    py::buffer_info qinfo = qobject.request();
+//    NGT::Object *ngtquery = 0;
+//    try {
+//      ngtquery = NGT::Index::allocateObject(static_cast<float*>(qinfo.ptr), qinfo.size);
+//    } catch (NGT::Exception &e) {
+//      std::cerr << e.what() << endl;
+//      if (!withDistance) {
+//	return py::array_t<int>();
+//      } else {
+//	return py::list();
+//      }
+//    }
+//    NGT::SearchContainer sc(*ngtquery);
+//    if (size == 0) {
+//      sc.setSize(numOfSearchObjects);		// the number of resulting objects.
+//    } else {
+//      sc.setSize(size);				// the number of resulting objects.
+//    }
+//    sc.setRadius(searchRadius);
+//    sc.setEpsilon(epsilon);			// set exploration coefficient.
+//    sc.setEdgeSize(edgeSize);			// if maxEdge is minus, the specified value in advance is used.
+//    NGT::ObjectDistances objects;
+//    sc.setResults(&objects);
+//
+//    cerr << "size: " << sc.size << endl;
+//    cerr << "radius: " << sc.radius << endl;
+//
+////    NGT::Index::linearSearch(sc);
+//    NGT::Index::search(sc);
+//
+//    numOfDistanceComputations += sc.distanceComputationCount;
+//
+//    NGT::Index::deleteObject(ngtquery);
+//    if (!withDistance) {
+////      NGT::ResultPriorityQueue &r = sc.getWorkingResult();
+////      py::array_t<int> ids(r.size());
+//      py::array_t<int> ids(objects.size());
+//      py::buffer_info idsinfo = ids.request();
+////      int *endptr = reinterpret_cast<int*>(idsinfo.ptr);
+////      int *ptr = endptr + (r.size() - 1);
+////      if (zeroNumbering) {
+////        while (ptr >= endptr) {
+////	  *ptr-- = r.top().id - 1;
+////	  r.pop();
+////        }
+////      } else {
+////        while (ptr >= endptr) {
+////	  *ptr-- = r.top().id;
+////	  r.pop();
+////        }
+//      int *ptr = reinterpret_cast<int*>(idsinfo.ptr);
+//      for (size_t oidx = 0; oidx < objects.size(); ++oidx) {
+//        ptr[oidx] = objects[oidx].id - 1;
+//      }
+//
+//      return ids;
+//    }
+//    py::list results;
+//    NGT::ObjectDistances r;
+//    r.moveFrom(sc.getWorkingResult());
+//    if (zeroNumbering) {
+//      for (auto ri = r.begin(); ri != r.end(); ++ri) {
+//	results.append(py::make_tuple((*ri).id - 1, (*ri).distance));
+//      }
+//    } else {
+//      for (auto ri = r.begin(); ri != r.end(); ++ri) {
+//	results.append(py::make_tuple((*ri).id, (*ri).distance));
+//      }
+//    }
+//    return results;
+//  }
+
+py::object search(
    py::object query,
-   size_t size = 10, 			// the number of resultant objects
+   size_t size = 0, 			// the number of resultant objects
    float epsilon = 0.1, 		// search parameter epsilon. the adequate range is from 0.0 to 0.15. minus value is acceptable.
    int edgeSize = -1,			// the number of used edges for each node during the exploration of the graph.
    bool withDistance = true
@@ -149,41 +229,31 @@ public:
     } else {
       sc.setSize(size);				// the number of resulting objects.
     }
-    sc.setRadius(searchRadius);
+    sc.setRadius(searchRadius);			// the radius of search.
     sc.setEpsilon(epsilon);			// set exploration coefficient.
     sc.setEdgeSize(edgeSize);			// if maxEdge is minus, the specified value in advance is used.
-    NGT::ObjectDistances objects;
-    sc.setResults(&objects);
 
-    cerr << "size: " << sc.size << endl;
-    cerr << "radius: " << sc.radius << endl;
-
-//    NGT::Index::linearSearch(sc);
     NGT::Index::search(sc);
 
     numOfDistanceComputations += sc.distanceComputationCount;
 
     NGT::Index::deleteObject(ngtquery);
     if (!withDistance) {
-//      NGT::ResultPriorityQueue &r = sc.getWorkingResult();
-//      py::array_t<int> ids(r.size());
-      py::array_t<int> ids(objects.size());
+      NGT::ResultPriorityQueue &r = sc.getWorkingResult();
+      py::array_t<int> ids(r.size());
       py::buffer_info idsinfo = ids.request();
-//      int *endptr = reinterpret_cast<int*>(idsinfo.ptr);
-//      int *ptr = endptr + (r.size() - 1);
-//      if (zeroNumbering) {
-//        while (ptr >= endptr) {
-//	  *ptr-- = r.top().id - 1;
-//	  r.pop();
-//        }
-//      } else {
-//        while (ptr >= endptr) {
-//	  *ptr-- = r.top().id;
-//	  r.pop();
-//        }
-      int *ptr = reinterpret_cast<int*>(idsinfo.ptr);
-      for (size_t oidx = 0; oidx < objects.size(); ++oidx) {
-        ptr[oidx] = objects[oidx].id - 1;
+      int *endptr = reinterpret_cast<int*>(idsinfo.ptr);
+      int *ptr = endptr + (r.size() - 1);
+      if (zeroNumbering) {
+        while (ptr >= endptr) {
+	  *ptr-- = r.top().id - 1;
+	  r.pop();
+        }
+      } else {
+        while (ptr >= endptr) {
+	  *ptr-- = r.top().id;
+	  r.pop();
+        }
       }
 
       return ids;
