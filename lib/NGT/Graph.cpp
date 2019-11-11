@@ -314,7 +314,8 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
     myfile.open ("seeds_size.txt", ios::out | ios::app);
     myfile << sc.size << endl;
     myfile << sc.radius << endl;
-    myfile.close();
+
+    
     if (sc.explorationCoefficient == 0.0) {
       sc.explorationCoefficient = NGT_EXPLORATION_COEFFICIENT;
     }
@@ -337,8 +338,6 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
 
     ResultSet results;
     setupSeeds(sc, seeds, results, unchecked, distanceChecked);
-    ofstream myfile;
-    myfile.open ("seeds_size.txt", ios::out | ios::app);
     myfile << seeds.size() << endl;
     myfile.close();
     Distance explorationRadius = sc.explorationCoefficient * sc.radius;
