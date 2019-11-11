@@ -216,13 +216,15 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
   void
     NeighborhoodGraph::searchReadOnlyGraph(NGT::SearchContainer &sc, ObjectDistances &seeds)
   {
-    cerr << "here " << endl;
+
+    cerr << sc.size << ", " << sc.radius << endl;
     if (sc.explorationCoefficient == 0.0) {
       sc.explorationCoefficient = NGT_EXPLORATION_COEFFICIENT;
     }
 
     // setup edgeSize
     size_t edgeSize = getEdgeSize(sc);
+    cerr << edgeSize << endl;
 
     UncheckedSet unchecked;
 
@@ -231,6 +233,7 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
     ResultSet results;
 
     setupSeeds(sc, seeds, results, unchecked, distanceChecked);
+    cerr << "seeds' size: " << seeds.size() << endl;
 
     Distance explorationRadius = sc.explorationCoefficient * sc.radius;
     const size_t dimension = objectSpace->getPaddedDimension();
@@ -295,7 +298,9 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
 	  } 
 	} 
       } 
-    } 
+    }
+
+    cerr << "results' size: " << results.size() << endl;
 
     if (sc.resultIsAvailable()) { 
       ObjectDistances &qresults = sc.getResult();
@@ -311,14 +316,6 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
   void
     NeighborhoodGraph::search(NGT::SearchContainer &sc, ObjectDistances &seeds)
   {
-  return;
-
-  ofstream myfile;
-    myfile.open ("seeds_size.txt", ios::out | ios::app);
-    myfile << sc.size << endl;
-    myfile << sc.radius << endl;
-
-
     if (sc.explorationCoefficient == 0.0) {
       sc.explorationCoefficient = NGT_EXPLORATION_COEFFICIENT;
     }
@@ -341,8 +338,6 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
 
     ResultSet results;
     setupSeeds(sc, seeds, results, unchecked, distanceChecked);
-    myfile << seeds.size() << endl;
-    myfile.close();
     Distance explorationRadius = sc.explorationCoefficient * sc.radius;
     NGT::ObjectSpace::Comparator &comparator = objectSpace->getComparator();
     ObjectRepository &objectRepository = getObjectRepository();
