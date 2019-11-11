@@ -310,12 +310,16 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
   void
     NeighborhoodGraph::search(NGT::SearchContainer &sc, ObjectDistances &seeds)
   {
-  ofstream myfile;
-    myfile.open ("seeds_size.txt", ios::out | ios::app);
-    myfile << sc.size << endl;
-    myfile << sc.radius << endl;
+  if (sc.resultIsAvailable()) {
+      ObjectDistances &qresults = sc.getResult();
+      qresults.clear();
+      qresults.moveFrom(results);
+    } else {
+      sc.workingResult = std::move(results);
+    }
+    return;
 
-    
+
     if (sc.explorationCoefficient == 0.0) {
       sc.explorationCoefficient = NGT_EXPLORATION_COEFFICIENT;
     }
