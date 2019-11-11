@@ -236,6 +236,7 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
     cerr << "seeds' size: " << seeds.size() << endl;
     for(int i=0; i<seeds.size(); i++)
         cerr << "seed: " << seeds[i] << endl;
+    cerr << "results' size after setupSeeds: " << results.size() << endl;
 
     Distance explorationRadius = sc.explorationCoefficient * sc.radius;
     const size_t dimension = objectSpace->getPaddedDimension();
@@ -249,6 +250,7 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
     while (!unchecked.empty()) {
       target = unchecked.top();
       unchecked.pop();
+      cerr << "target: " << target << " with distance " << target.distance << ", explorationRadius: " << explorationRadius << endl;
       if (target.distance > explorationRadius) {
 	break;
       }
@@ -285,10 +287,12 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
 
 	Distance distance = COMPARATOR::compare((void*)&sc.object[0], 
 						(void*)&(*static_cast<PersistentObject*>(neighbor.second))[0], dimension);
+	cerr << "current neighbor's distance " << distance << endl;
 	if (distance <= explorationRadius) {
 	  result.set(neighbor.first, distance);
 	  unchecked.push(result);
 	  if (distance <= sc.radius) {
+	    cerr << "add to results: " << result << endl;
 	    results.push(result);
 	    if (results.size() >= sc.size) {
 	      if (results.size() > sc.size) {
@@ -296,6 +300,7 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
 	      }
 	      sc.radius = results.top().distance;
 	      explorationRadius = sc.explorationCoefficient * sc.radius;
+	      cerr << "update sc.radius: " << sc.radius << ", explorationRadius: " << explorationRadius << endl;
 	    } 
 	  } 
 	} 
