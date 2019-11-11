@@ -216,6 +216,7 @@ NeighborhoodGraph::setupSeeds(NGT::SearchContainer &sc, ObjectDistances &seeds, 
   void
     NeighborhoodGraph::searchReadOnlyGraph(NGT::SearchContainer &sc, ObjectDistances &seeds)
   {
+    cerr << "here " << endl;
     if (sc.explorationCoefficient == 0.0) {
       sc.explorationCoefficient = NGT_EXPLORATION_COEFFICIENT;
     }
