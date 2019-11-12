@@ -49,7 +49,7 @@
 #endif
 
 #ifndef NGT_SEED_SIZE
-#define	NGT_SEED_SIZE				10
+#define	NGT_SEED_SIZE				100
 #endif
 
 #ifndef NGT_CREATION_EDGE_SIZE
@@ -764,4 +764,5 @@ namespace NGT {
     }; // NeighborhoodGraph
 
   } // NGT
+
 
