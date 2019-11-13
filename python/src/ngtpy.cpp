@@ -270,7 +270,8 @@ public:
         NGT::ObjectDistances r;
         r.moveFrom(sc.getWorkingResult());
         if (zeroNumbering) {cout << delta << ", " << radius + delta << endl;
-          for (auto ri = r.begin(); ri != r.end() && (*ri).distance < radius + delta; ++ri) {cout << (*ri).distance << endl;
+          for (auto ri = r.begin(); ri != r.end(); ++ri) cout << (*ri).distance << endl;
+          for (auto ri = r.begin(); ri != r.end() && (*ri).distance < radius + delta; ++ri) {
             if (!withDistance)
               results.append((*ri).id - 1);
             else
@@ -283,7 +284,7 @@ public:
             else
               results.append(py::make_tuple((*ri).id, (*ri).distance));
           }
-        }cout << "result size: " << results.size() << endl;
+        }cout << "result size: " << result.size() << endl;
         if (results.size() == size)
           {size *= 2; cout << "size doubled: " << size << endl;}
         else
