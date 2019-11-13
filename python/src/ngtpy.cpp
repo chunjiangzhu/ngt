@@ -270,16 +270,16 @@ public:
         NGT::ObjectDistances r;
         r.moveFrom(sc.getWorkingResult());
         if (zeroNumbering) {
-          for (auto ri = r.begin(); ri != r.end() && (*ri).distance) < radius + delta; ++ri) {
+          for (auto ri = r.begin(); ri != r.end() && (*ri).distance < radius + delta; ++ri) {
         results.append(py::make_tuple((*ri).id - 1, (*ri).distance));
           }
         } else {
-          for (auto ri = r.begin(); ri != r.end() && (*ri).distance) < radius + delta; ++ri) {
+          for (auto ri = r.begin(); ri != r.end() && (*ri).distance < radius + delta; ++ri) {
         results.append(py::make_tuple((*ri).id, (*ri).distance));
           }
         }
         if (results.size() == size) {
-          results.empty();
+          results.clear();
           size *= 2;
         }
         else
