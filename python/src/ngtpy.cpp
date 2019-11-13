@@ -266,7 +266,7 @@ public:
     //	  r.pop();
     //        }
           int *ptr = reinterpret_cast<int*>(idsinfo.ptr);
-          for (size_t res_it = 0, oidx = 0; oidx < objects.size() && objects[oidx].distance < radius + delta; ++oidx) {
+          for (size_t res_it = 0, oidx = 0; oidx < objects.size() && objects[oidx].distance < radius + delta; ++res_it, ++oidx) {
             ptr[res_it] = objects[oidx].id - 1;cout << ptr[res_it] << endl;
           }
 
