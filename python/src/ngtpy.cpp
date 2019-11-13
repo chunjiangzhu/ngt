@@ -265,40 +265,23 @@ public:
 //
 //          return ids;
 //        }
-        if (!withDistance) {
-          NGT::ResultPriorityQueue &r = sc.getWorkingResult();
-          py::array_t<int> ids(r.size());
-          py::buffer_info idsinfo = ids.request();
-          int *endptr = reinterpret_cast<int*>(idsinfo.ptr);
-          int *ptr = endptr + (r.size() - 1);
-          if (zeroNumbering) {cout << delta << ", " << radius + delta << endl;cout << r.top().distance << endl;
-            while (ptr >= endptr && r.top().distance < radius + delta) {
-          *ptr-- = r.top().id - 1;cout << r.top().distance << endl;
-          r.pop();
-            }
-          } else {cout << delta << ",1 " << radius + delta << endl;cout << r.top().distance << endl;
-            while (ptr >= endptr && r.top().distance < radius + delta) {
-          *ptr-- = r.top().id;cout << r.top().distance << endl;
-          r.pop();
-            }
-          }cout << "ids.size(): " << ids.size() << endl;
-          if (ids.size() == size) {
-            size *= 2;
-            continue;
-          } else
-            return ids;
-        }
 
         py::list results;
         NGT::ObjectDistances r;
         r.moveFrom(sc.getWorkingResult());
         if (zeroNumbering) {
           for (auto ri = r.begin(); ri != r.end() && (*ri).distance < radius + delta; ++ri) {
-        results.append(py::make_tuple((*ri).id - 1, (*ri).distance));
+            if (!withDistance)
+              results.append((*ri).id - 1);
+            else
+              results.append(py::make_tuple((*ri).id - 1, (*ri).distance));
           }
         } else {
           for (auto ri = r.begin(); ri != r.end() && (*ri).distance < radius + delta; ++ri) {
-        results.append(py::make_tuple((*ri).id, (*ri).distance));
+          if (!withDistance)
+              results.append((*ri).id);
+            else
+              results.append(py::make_tuple((*ri).id, (*ri).distance));
           }
         }
         if (results.size() == size)
