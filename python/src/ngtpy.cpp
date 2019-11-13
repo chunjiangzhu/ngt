@@ -211,7 +211,6 @@ public:
     py::array_t<float> qobject(query);
     py::buffer_info qinfo = qobject.request();
     NGT::Object *ngtquery = 0;
-    py::list results;
     int size = 100;
     while(1) {
         try {
@@ -267,6 +266,7 @@ public:
           return ids;
         }
 
+        py::list results;
         NGT::ObjectDistances r;
         r.moveFrom(sc.getWorkingResult());
         if (zeroNumbering) {
@@ -278,14 +278,11 @@ public:
         results.append(py::make_tuple((*ri).id, (*ri).distance));
           }
         }
-        if (results.size() == size) {
-          results.clear();
+        if (results.size() == size)
           size *= 2;
-        }
         else
-          break;
+          return results;
     }
-    return results;
   }
 
 
