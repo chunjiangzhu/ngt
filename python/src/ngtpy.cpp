@@ -284,7 +284,7 @@ public:
             else
               results.append(py::make_tuple((*ri).id, (*ri).distance));
           }
-        }cout << "result size: " << result.size() << endl;
+        }cout << "result size: " << results.size() << endl;
         if (results.size() == size)
           {size *= 2; cout << "size doubled: " << size << endl;}
         else
