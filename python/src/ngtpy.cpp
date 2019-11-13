@@ -271,17 +271,17 @@ public:
           py::buffer_info idsinfo = ids.request();
           int *endptr = reinterpret_cast<int*>(idsinfo.ptr);
           int *ptr = endptr + (r.size() - 1);
-          if (zeroNumbering) {cerr << delta << ", " << radius + delta << endl;cerr << r.top().distance << endl;
+          if (zeroNumbering) {cout << delta << ", " << radius + delta << endl;cout << r.top().distance << endl;
             while (ptr >= endptr && r.top().distance < radius + delta) {
-          *ptr-- = r.top().id - 1;cerr << r.top().distance << endl;
+          *ptr-- = r.top().id - 1;cout << r.top().distance << endl;
           r.pop();
             }
-          } else {cerr << delta << ", " << radius + delta << endl;cerr << r.top().distance << endl;
+          } else {cout << delta << ",1 " << radius + delta << endl;cout << r.top().distance << endl;
             while (ptr >= endptr && r.top().distance < radius + delta) {
-          *ptr-- = r.top().id;cerr << r.top().distance << endl;
+          *ptr-- = r.top().id;cout << r.top().distance << endl;
           r.pop();
             }
-          }cerr << "ids.size(): " << ids.size() << endl;
+          }cout << "ids.size(): " << ids.size() << endl;
           if (ids.size() == size) {
             size *= 2;
             continue;
