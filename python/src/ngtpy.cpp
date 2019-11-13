@@ -269,13 +269,13 @@ public:
         py::list results;
         NGT::ObjectDistances r;
         r.moveFrom(sc.getWorkingResult());
-        if (zeroNumbering) {
+        if (zeroNumbering) {cerr << delta << ", " << radius + delta << endl;
           for (auto ri = r.begin(); ri != r.end() && (*ri).distance < radius + delta; ++ri) {
-        results.append(py::make_tuple((*ri).id - 1, (*ri).distance));
+        results.append(py::make_tuple((*ri).id - 1, (*ri).distance));cerr << (*ri).distance << endl;
           }
-        } else {
+        } else {cerr << delta << ", " << radius + delta << endl;
           for (auto ri = r.begin(); ri != r.end() && (*ri).distance < radius + delta; ++ri) {
-        results.append(py::make_tuple((*ri).id, (*ri).distance));
+        results.append(py::make_tuple((*ri).id, (*ri).distance));cerr << (*ri).distance << endl;
           }
         }
         if (results.size() == size)
