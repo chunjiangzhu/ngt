@@ -211,7 +211,7 @@ public:
     py::array_t<float> qobject(query);
     py::buffer_info qinfo = qobject.request();
     NGT::Object *ngtquery = 0;
-    int size = 100;
+    int size = 100;cerr << "here" << endl;
     while(1) {
         try {
           ngtquery = NGT::Index::allocateObject(static_cast<float*>(qinfo.ptr), qinfo.size);
@@ -266,7 +266,7 @@ public:
           return ids;
         }
 
-        py::list results;
+        py::list results;cerr << "results" << endl;
         NGT::ObjectDistances r;
         r.moveFrom(sc.getWorkingResult());
         if (zeroNumbering) {cerr << delta << ", " << radius + delta << endl;
