@@ -248,6 +248,8 @@ public:
           for (size_t oidx = 0; oidx < objects.size() && objects[oidx].distance < radius + delta; ++oidx) res_size++;
           if (res_size == size){
             size *= 2;
+            cout << "size doubled: " << size << endl;
+            continue;
           }
           py::array_t<int> ids(res_size);
           py::buffer_info idsinfo = ids.request();
@@ -265,9 +267,8 @@ public:
     //        }
           int *ptr = reinterpret_cast<int*>(idsinfo.ptr);
           for (size_t res_it = 0, oidx = 0; oidx < objects.size() && objects[oidx].distance < radius + delta; ++oidx) {
-            ptr[res_it] = objects[oidx].id - 1;
+            ptr[res_it] = objects[oidx].id - 1;cout << ptr[res_it] << endl;
           }
-
 
           return ids;
         }
