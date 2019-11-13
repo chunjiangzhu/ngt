@@ -282,7 +282,7 @@ public:
           r.pop();
             }
           }
-          if (results.size() == size) {
+          if (ids.size() == size) {
             size *= 2;
             continue;
           } else
