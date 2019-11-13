@@ -285,7 +285,7 @@ public:
           }
         }cout << "result size: " << result.size() << endl;
         if (results.size() == size)
-          {size *= 2; cout << "size doubled: " << size << endl;
+          {size *= 2; cout << "size doubled: " << size << endl;}
         else
           return results;
     }
